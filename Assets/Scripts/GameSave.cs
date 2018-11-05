@@ -6,7 +6,9 @@ using UnityEngine;
 using System.Xml;
 using System.Xml.Serialization;
 using System.IO;
+using System;
 
+/*
 [XmlRoot("Game Data")]
 public class GameData
 {
@@ -43,6 +45,14 @@ public class GameData
             }
         }
     }
+}*/
+
+[Serializable]
+public class GameData
+{
+    public Vector3 playerPos;
+    public int score;
+    public Quaternion playerRot;
 }
 
 public class GameSave : MonoBehaviour
@@ -65,23 +75,29 @@ public class GameSave : MonoBehaviour
 
     public void Save()
     {
-        string fullPath = Application.dataPath + "/Data/" + fileName + ".xml";
-        data.Save(fullPath);
+        string fullPath = Application.dataPath + "/Data/" + fileName + ".json";
+        //data.Save(fullPath);
+        string json = JsonUtility.ToJson(data);
+        File.WriteAllText(fullPath, json);
+
         print("Saved to path: " + fullPath);
         // C:/Users/anshuman.meghnad/Documents/advanced_programming/AssetsGameSave.xml
     }
 
     public void Load()
     {
-        string fullPath = Application.dataPath + "/Data/" + fileName + ".xml";
-        data.Load(fullPath);
+        string fullPath = Application.dataPath + "/Data/" + fileName + ".json";
+        //data.Load(fullPath);
+        string json = JsonUtility.ToJson(data);
+        File.WriteAllText(fullPath, json);
+
         print("Loaded from path: " + fullPath);
         // C:/Users/anshuman.meghnad/Documents/advanced_programming/AssetsGameSave.xml
     }
 
     public static bool Exists()
     {
-        string fullPath = Application.dataPath + "/Data/" + Instance.fileName + ".xml";
+        string fullPath = Application.dataPath + "/Data/" + Instance.fileName + ".json";
         return File.Exists(fullPath);
     }
 }
