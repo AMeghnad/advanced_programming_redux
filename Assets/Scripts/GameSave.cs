@@ -88,8 +88,8 @@ public class GameSave : MonoBehaviour
     {
         string fullPath = Application.dataPath + "/Data/" + fileName + ".json";
         //data.Load(fullPath);
-        string json = JsonUtility.ToJson(data);
-        File.WriteAllText(fullPath, json);
+        string json = File.ReadAllText(fullPath);
+        data = JsonUtility.FromJson<GameData>(json);
 
         print("Loaded from path: " + fullPath);
         // C:/Users/anshuman.meghnad/Documents/advanced_programming/AssetsGameSave.xml
